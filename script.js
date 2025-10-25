@@ -3,26 +3,24 @@ const dis_btn=document.getElementById('show_weath')
 const city=document.getElementById('input_weath')
 const output_data=document.querySelector('.display_area')
 
-dis_btn.addEventListener('click',function(){
-    let user_city=city.value
-    if(user_city){
-          
-          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${user_city}&units=metric&APPID=01997a6aae77359e24d35d4c16edf1f3`) 
-          .then(Response=>{
-            return Response.json()
-          })
-          .then(weather_data=>{
-                    const temp = weather_data.main.temp;
-                    const desc = weather_data.weather[0].description;
-                    const cityName = weather_data.name;
-                    output_data.textContent=`weather in ${cityName}: ${temp}C, ${desc}`
-                //console.log('full weather data ',weather_data)
-                //console.log('temperature',weather_data.main.temp)
-          })
-          .catch(Error=>{
-            alert('error in loading')
-          })
+async function addEventListener_t(){
+    const usercity= city.value.trim()
+    if(usercity ){
+      try{
+        const res=await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${usercity}&units=metric&APPID=01997a6aae77359e24d35d4c16edf1f3`)
+          if(res.status==200){
+            console.log('ok')
+            const weather_data=await res.json()
+            const{main:{temp,feels_like}}=weather_data;
+            output_data.textContent=`temp is ${temp} : feels like ${feels_like}`;
+          }
+          else{
+            output_data.textContent=`your city is ${res.status}`;
+
+          }
+      }
+      catch(error){
+          console.log(`error of catch: ${error}`)
+      }
     }
-
-
-})
+}
