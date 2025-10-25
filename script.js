@@ -7,7 +7,7 @@ dis_btn.addEventListener('click',function(){
     let user_city=city.value
     if(user_city){
           
-          fetch(`http://api.openweathermap.org/data/2.5/weather?q=${user_city}&units=metric&APPID=01997a6aae77359e24d35d4c16edf1f3`) 
+          fetch(`https://api.openweathermap.org/data/2.5/weather?q=${user_city}&units=metric&APPID=01997a6aae77359e24d35d4c16edf1f3`) 
           .then(Response=>{
             return Response.json()
           })
